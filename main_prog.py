@@ -35,32 +35,33 @@ def init_serialCom():
 def execute_tasks(message):
     
     if 'enter' in message :
-        ...
-        #user_id, erorr = entry_gate.read_qr()
+        # user_id, erorr = entry_gate.read_qr()
         # if not error:
-            #perm = api_handler.get_perm(user_id)
+        #     perm = api_handler.get_perm(user_id)
 
-            # if perm == 1:   #full registered
-            #     entry_done = True
+        #     if perm == 1:   #full registered
+        #         entry_done = True
 
-            # else:  #no pics
-                # erorr = entry_gate.register()
-                # if not erorr:
-                #     entry_done = api_handler.set_perm(user_id)
+        #     else:  #no pics
+        #         erorr = entry_gate.register()
+        #         if not erorr:
+        #             entry_done = api_handler.set_perm(user_id)
             
-            # if entry_done:
-            #     try:
-            #         order_id = api_handler.new_entry(user_id)
-            #         c.execute("INSERT INTO orders ('userID', 'orderID') Values( "+user_id+" , "+ order_id+" )")
-            #         conn.commit()                            
-            #         
-            #         send_serialData("approve entry") 
-            #     except sqlite3.Error:
-            #         print (colored("SQLite Error: Inserting orderID", 'red'))
-            #         send_serialData("refuse entry") 
+        #     if entry_done:
+        #         try:
+        #             order_id = api_handler.new_entry(user_id)
+        #             c.execute("INSERT INTO orders ('userID', 'orderID') Values( "+user_id+" , "+ order_id+" )")
+        #             conn.commit()                            
+                    
+        #             send_serialData("approve entry") 
+        #         except sqlite3.Error:
+        #             print (colored("SQLite Error: Inserting orderID", 'red'))
+        #             send_serialData("refuse entry") 
 
-            # else:
-            #     send_serialData("refuse entry") 
+        #     else:
+        #         send_serialData("refuse entry") 
+        # else:
+        #     send_serialData("refuse entry")
 
     elif 'shop' in message :
         ...
