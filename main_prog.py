@@ -3,9 +3,9 @@ import sqlite3
 from termcolor import colored
 
 import api_handler
-#import entry_gate
+import entry_gate
 #import shooping
-#import exit_gate
+import exit_gate
 
 ##conect to the local database
 conn = sqlite3.connect('store.db')
@@ -15,65 +15,67 @@ def init_db():
     try:
         c.execute("CREATE TABLE IF NOT EXISTS products(ID integer PRIMARY KEY, Name  text, typeID integer)")
         c.execute("CREATE TABLE IF NOT EXISTS orders(orderID integer PRIMARY KEY, userID integer)")
-        c.execute("CREATE TABLE IF NOT EXISTS orderLines(orderID integer, prodID integer)")
         return True
     except sqlite3.Error as er:
         print (colored("SQLite Error: "+ er, 'red'))
     return False
 
 def init_serialCom():
-    port = "COM3"
+    port = "/dev/ttyACM0"
     baud = 9600
     try:
         ser = serial.Serial(port, baud, timeout=1)
-        return True
+        return True, ser
     except Exception as e:
         print (colored("Serial Error: opening serial port: " + str(e), 'red'))
     
-    return False
+    return False, None
 
 def execute_tasks(message):
     
     if 'enter' in message :
-        # user_id, erorr = entry_gate.read_qr()
-        # if not error:
-        #     perm = api_handler.get_perm(user_id)
+        ...
+        user_id, erorr = entry_gate.read_qr()
+        if not erorr:
+            perm = api_handler.get_perm(user_id)
 
-        #     if perm == 1:   #full registered
-        #         entry_done = True
+            if perm == 1:   #full registered
+                entry_done = entry_gate.checkFace(user_id)
 
-        #     else:  #no pics
-        #         erorr = entry_gate.register()
-        #         if not erorr:
-        #             entry_done = api_handler.set_perm(user_id)
+            else:  #no pics
+                erorr = entry_gate.register()
+                if not erorr:
+                    api_handler.set_perm(user_id)
+                    entry_done = entry_gate.checkFace(user_id)
             
-        #     if entry_done:
-        #         try:
-        #             order_id = api_handler.new_entry(user_id)
-        #             c.execute("INSERT INTO orders ('userID', 'orderID') Values( "+user_id+" , "+ order_id+" )")
-        #             conn.commit()                            
+            if entry_done:
+                try:
+                    order_id = api_handler.new_entry(user_id)
+                    c.execute("INSERT INTO orders ('userID', 'orderID') Values( "+user_id+" , "+ order_id+" )")
+                    conn.commit()                            
                     
-        #             send_serialData("approve entry") 
-        #         except sqlite3.Error:
-        #             print (colored("SQLite Error: Inserting orderID", 'red'))
-        #             send_serialData("refuse entry") 
+                    send_serialData("approve entry") 
+                except sqlite3.Error:
+                    print (colored("SQLite Error: Inserting orderID", 'red'))
+                    send_serialData("refuse entry") 
 
-        #     else:
-        #         send_serialData("refuse entry") 
-        # else:
-        #     send_serialData("refuse entry")
+            else:
+                send_serialData("refuse entry") 
+        else:
+            send_serialData("refuse entry")
 
     elif 'shop' in message :
         ...
-        # prod_id, user_id, state, error = shooping.getState()
+        #  user_id, error = shooping.getUser()
 
         # if not error:
         #     try:
         #         c.execute("SELECT orderID FROM orders WHERE userID = "+user_id)
-        #         order_id=c.fetchone()[0]           
-        #         #api_handler.new_orderline(order_id, prod_id, state)
-        #         c.execute("INSERT INTO orderLines ('orderID', 'prodID') VALUES ( "+order_id+" , "+prod_id" )")
-        #         conn.commit
+        #         order_id=c.fetchone()[0] 
+
+        #         c.execute("SELECT typeID FROM products WHERE ID = "+prod_id)
+        #         type_id = c.fetchone()[0]
+        #         #api_handler.new_orderline(order_id, type_id, state)
 
         #         send_serialData("approve shoping")        
         #     except sqlite3.Error as er :
@@ -98,17 +100,16 @@ def execute_tasks(message):
 def send_serialData(message):
     ser.write(bytes(message,'utf-8'))
             
-
 ## main programe:
 if init_db():
     while(True):
-        if init_serialCom():
+        initalized,ser = init_serialCom()
+        if initalized:
             ser.reset_input_buffer()
-            while ser.in_waiting:
-                message= ser.readline()
-                print(message)
+            message= str(ser.readline())
+            print(message)
+            if len(message)>5:
                 execute_tasks(message)
         else:
             message = input(colored("insert command manually >> ","green"))
             execute_tasks(message)
-

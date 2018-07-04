@@ -1,0 +1,94 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+Image	../tools/face_recognition/trainer.py	/^from PIL import Image$/;"	kind:namespace	line:4
+api_handler	../main_prog.py	/^import api_handler$/;"	kind:namespace	line:5
+api_handler.py	../api_handler.py	1;"	kind:file	line:1
+arrays	../tools/qr_reader.py	/^import numpy as np   #import numpy library for arrays usages$/;"	kind:namespace	line:10
+c	../main_prog.py	/^c = conn.cursor()$/;"	kind:variable	line:12
+c	../tools/face_recognition/datasetCreator.py	/^c = conn.cursor()$/;"	kind:variable	line:13
+cam	../tools/face_recognition/datasetCreator.py	/^cam = cv2.VideoCapture(1)$/;"	kind:variable	line:10
+cam	../tools/face_recognition/detector.py	/^cam = cv2.VideoCapture(0)$/;"	kind:variable	line:6
+check_face	../entry_gate.py	/^def check_face(user_id):$/;"	kind:function	line:12
+cmp	../tools/face_recognition/datasetCreator.py	/^import imgCompare as cmp$/;"	kind:namespace	line:3
+colored	../main_prog.py	/^from termcolor import colored$/;"	kind:namespace	line:3
+compare_images	../tools/face_recognition/imgCompare.py	/^def compare_images(imageA, imageB, title):$/;"	kind:function	line:17
+conn	../main_prog.py	/^conn = sqlite3.connect('store.db')$/;"	kind:variable	line:11
+conn	../tools/face_recognition/datasetCreator.py	/^conn = sqlite3.connect("FaceBase")$/;"	kind:variable	line:12
+cv2	../tools/face_recognition/datasetCreator.py	/^import cv2$/;"	kind:namespace	line:1
+cv2	../tools/face_recognition/detector.py	/^import cv2$/;"	kind:namespace	line:1
+cv2	../tools/face_recognition/trainer.py	/^import cv2$/;"	kind:namespace	line:2
+cv2	../tools/qr_reader.py	/^import cv2   $/;"	kind:namespace	line:9
+datasetCreator.py	../tools/face_recognition/datasetCreator.py	1;"	kind:file	line:1
+detector.py	../tools/face_recognition/detector.py	1;"	kind:file	line:1
+entry_gate	../main_prog.py	/^import entry_gate$/;"	kind:namespace	line:6
+entry_gate.py	../entry_gate.py	1;"	kind:file	line:1
+execute_tasks	../main_prog.py	/^def execute_tasks(message):$/;"	kind:function	line:34
+exit_gate	../main_prog.py	/^import exit_gate$/;"	kind:namespace	line:8
+exit_gate.py	../exit_gate.py	1;"	kind:file	line:1
+faceDetect	../tools/face_recognition/datasetCreator.py	/^faceDetect = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')$/;"	kind:variable	line:9
+faceDetect	../tools/face_recognition/detector.py	/^faceDetect = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')$/;"	kind:variable	line:5
+face_recognition	../entry_gate.py	/^import tools.face_recognition$/;"	kind:namespace	line:1
+font	../tools/face_recognition/detector.py	/^font = cv2.FONT_HERSHEY_SIMPLEX$/;"	kind:variable	line:9
+for	../tools/qr_reader.py	/^import numpy as np   #import numpy library for arrays usages$/;"	kind:namespace	line:10
+get_faceID	../tools/face_recognition/detector.py	/^def get_faceID():$/;"	kind:function	line:24
+get_images_with_id	../tools/face_recognition/trainer.py	/^def get_images_with_id(path):$/;"	kind:function	line:10
+get_perm	../api_handler.py	/^def get_perm(user_id):$/;"	kind:function	line:35
+get_profile	../tools/face_recognition/detector.py	/^def get_profile(id):$/;"	kind:function	line:13
+host	../api_handler.py	/^host = "http:\/\/mommmmom.esy.es\/ras"$/;"	kind:variable	line:4
+imgCompare.py	../tools/face_recognition/imgCompare.py	1;"	kind:file	line:1
+import	../tools/qr_reader.py	/^import numpy as np   #import numpy library for arrays usages$/;"	kind:namespace	line:10
+init_db	../main_prog.py	/^def init_db(): $/;"	kind:function	line:14
+init_db	../tools/face_recognition/datasetCreator.py	/^def init_db(): $/;"	kind:function	line:15
+init_serialCom	../main_prog.py	/^def init_serialCom():$/;"	kind:function	line:23
+insert_record	../tools/face_recognition/datasetCreator.py	/^def insert_record(Id):$/;"	kind:function	line:23
+json	../api_handler.py	/^import json$/;"	kind:namespace	line:2
+library	../tools/qr_reader.py	/^import numpy as np   #import numpy library for arrays usages$/;"	kind:namespace	line:10
+main_prog.py	../main_prog.py	1;"	kind:file	line:1
+mse	../tools/face_recognition/imgCompare.py	/^def mse(imageA, imageB):$/;"	kind:function	line:6
+new_entry	../api_handler.py	/^def new_entry(user_id):$/;"	kind:function	line:7
+new_exit	../api_handler.py	/^def new_exit(orderID):$/;"	kind:function	line:16
+new_orderline	../api_handler.py	/^def new_orderline(orderID, prodID, status):$/;"	kind:function	line:26
+np	../tools/face_recognition/datasetCreator.py	/^import numpy as np  $/;"	kind:namespace	line:6
+np	../tools/face_recognition/imgCompare.py	/^import numpy as np$/;"	kind:namespace	line:3
+np	../tools/face_recognition/trainer.py	/^import numpy as np$/;"	kind:namespace	line:3
+np	../tools/qr_reader.py	/^import numpy as np   #import numpy library for arrays usages$/;"	kind:namespace	line:10
+numpy	../tools/qr_reader.py	/^import numpy as np   #import numpy library for arrays usages$/;"	kind:namespace	line:10
+os	../tools/face_recognition/trainer.py	/^import os$/;"	kind:namespace	line:1
+path	../tools/face_recognition/trainer.py	/^path = 'dataSet'$/;"	kind:variable	line:7
+pyzbar	../tools/qr_reader.py	/^from pyzbar import pyzbar$/;"	kind:namespace	line:8
+qr_read	../exit_gate.py	/^def qr_read()/;"	kind:function	line:4
+qr_reader	../entry_gate.py	/^import tools.qr_reader$/;"	kind:namespace	line:2
+qr_reader	../exit_gate.py	/^import tools.qr_reader$/;"	kind:namespace	line:1
+qr_reader.py	../tools/qr_reader.py	1;"	kind:file	line:1
+read_multiple	../tools/qr_reader.py	/^def read_multiple(url):$/;"	kind:function	line:54
+read_once	../tools/qr_reader.py	/^def read_once(url):$/;"	kind:function	line:32
+read_qr	../entry_gate.py	/^def read_qr():$/;"	kind:function	line:5
+read_usb	../tools/qr_reader.py	/^def read_usb(i):$/;"	kind:function	line:13
+rec	../tools/face_recognition/detector.py	/^rec = cv2.face.LBPHFaceRecognizer_create()$/;"	kind:variable	line:7
+recognizer	../tools/face_recognition/trainer.py	/^recognizer = cv2.face.LBPHFaceRecognizer_create()$/;"	kind:variable	line:6
+register	../entry_gate.py	/^def register(user_id):$/;"	kind:function	line:9
+register	../tools/face_recognition/datasetCreator.py	/^def register(id,url)$/;"	kind:function	line:33
+request	../tools/face_recognition/datasetCreator.py	/^import urllib.request$/;"	kind:namespace	line:5
+request	../tools/qr_reader.py	/^import urllib.request$/;"	kind:namespace	line:11
+requests	../api_handler.py	/^import requests$/;"	kind:namespace	line:1
+send_serialData	../main_prog.py	/^def send_serialData(message):$/;"	kind:function	line:100
+serial	../main_prog.py	/^import serial$/;"	kind:namespace	line:1
+set_perm	../api_handler.py	/^def set_perm(user_id):$/;"	kind:function	line:43
+sqlite3	../main_prog.py	/^import sqlite3$/;"	kind:namespace	line:2
+sqlite3	../tools/face_recognition/datasetCreator.py	/^import sqlite3$/;"	kind:namespace	line:2
+sqlite3	../tools/face_recognition/detector.py	/^import sqlite3$/;"	kind:namespace	line:2
+ssim	../tools/face_recognition/imgCompare.py	/^from skimage.measure import compare_ssim as ssim$/;"	kind:namespace	line:2
+ssim_all	../tools/face_recognition/imgCompare.py	/^def ssim_all(image, images, threshold):$/;"	kind:function	line:26
+tariner	../tools/face_recognition/datasetCreator.py	/^import tariner$/;"	kind:namespace	line:4
+tools	../entry_gate.py	/^import tools.face_recognition$/;"	kind:namespace	line:1
+tools	../entry_gate.py	/^import tools.qr_reader$/;"	kind:namespace	line:2
+tools	../exit_gate.py	/^import tools.qr_reader$/;"	kind:namespace	line:1
+train	../tools/face_recognition/trainer.py	/^def train():$/;"	kind:function	line:25
+trainer.py	../tools/face_recognition/trainer.py	1;"	kind:file	line:1
+urllib	../tools/face_recognition/datasetCreator.py	/^import urllib.request$/;"	kind:namespace	line:5
+urllib	../tools/qr_reader.py	/^import urllib.request$/;"	kind:namespace	line:11
+usages	../tools/qr_reader.py	/^import numpy as np   #import numpy library for arrays usages$/;"	kind:namespace	line:10
