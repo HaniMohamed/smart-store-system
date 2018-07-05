@@ -20,7 +20,7 @@ def read_usb(i):
         barcodes = pyzbar.decode(img)
         
         if(len(barcodes)>0):
-            return barcode.data
+            return barcodes[0].data
             break
         
         #wait for key pressed
@@ -28,6 +28,7 @@ def read_usb(i):
         # if the 'q' key is pressed, stop the loop (Exit)
         if key == ord("q"):
             break
+    cv2.destroyAllWindows()
 
 def read_once(url):
     #start the process loop

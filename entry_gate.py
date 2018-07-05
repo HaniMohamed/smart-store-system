@@ -1,18 +1,28 @@
-import tools.face_recognition
-import tools.qr_reader
+from tools.face_recognition import datasetCreator
+from tools.face_recognition import face_trainer
+from tools.face_recognition import detector
+from tools import qr_reader
+import constants
 
 
 def read_qr():
-    return qr_reader.read_usb(2), True
+    print("getEnter QR")
+    return str(qr_reader.read_usb(constants.qr_camera), "utf-8"), False
 
 
 def register(user_id):
-    face_recognition.datasetCreator.register(user_id,"http://192.168.12.244:8080/shot.jpg)
-    face_recognition.face_trainer.train()
+    datasetCreator.register(user_id,constants.entry_camera)
+    face_trainer.train()
     return False
 
 def check_face(user_id):
-    IDs = face_recognition.detector.get_faceID()
+    IDs=[]
+    i=0
+    while (i<3):
+        IDs.append(str(detector.get_faceID(constants.entry_camera)))
+        i=i+1
+    print(IDs)
+    print(user_id)
     if user_id in IDs:
         return True
     return False

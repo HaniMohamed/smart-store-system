@@ -1,4 +1,6 @@
 import tools.qr_reader
+import constants
 
 
-def qr_read()
+def read_qr():
+    return qr_reader.read_usb(constants.usb_camera), True
