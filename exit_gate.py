@@ -3,4 +3,4 @@ import constants
 
 
 def read_qr():
-    return qr_reader.read_usb(constants.usb_camera), True
+    return qr_reader.read_usb(constants.qr_camera), True

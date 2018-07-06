@@ -18,6 +18,7 @@ def new_exit(orderID):
     payload = {'order_id': orderID}
     response = requests.request("POST", url, data=payload)
     resJSON= json.loads(response.text)
+    print(response.text)
     if(resJSON['error'] == 0):
         return False
     return True
@@ -34,7 +35,6 @@ def new_orderline(orderID, prodID, status):
     return True
 
 def get_perm(user_id):
-    print("getPerm")
     url = host+"/user/"+str(user_id)
     response = requests.get( url)
     resJSON= json.loads(response.text)

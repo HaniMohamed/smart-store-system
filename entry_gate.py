@@ -7,9 +7,12 @@ import constants
 
 def read_qr():
     print("getEnter QR")
-    return str(qr_reader.read_usb(constants.qr_camera), "utf-8"), False
-
-
+    qr_data , error = qr_reader.read_usb(constants.qr_camera)
+    if not error:
+        return str(qr_data, "utf-8"), error
+    else:
+        return None, error
+        
 def register(user_id):
     datasetCreator.register(user_id,constants.entry_camera)
     face_trainer.train()
@@ -21,8 +24,6 @@ def check_face(user_id):
     while (i<3):
         IDs.append(str(detector.get_faceID(constants.entry_camera)))
         i=i+1
-    print(IDs)
-    print(user_id)
     if user_id in IDs:
         return True
     return False
