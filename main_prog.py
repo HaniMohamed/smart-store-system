@@ -148,6 +148,32 @@ def tessst():
     else:
         print(colored("Welcome, "+str(user_id),"green"))
 
+def storeProducts():
+    red_objetcs=0
+    green_objetcs=0
+    yellow_objetcs=0
+    try:
+            c.execute("SELECT COUNT(Name),color FROM products GROUP BY color")    
+            rows = c.fetchall()
+            print(rows)
+            for row in rows:
+                if 'red' in row[1]:
+                    red_objetcs = row[0]
+                elif 'green' in row[1]:
+                    green_objetcs = row[0]
+                elif 'yellow' in row[1]:
+                    yellow_objetcs = row[0]
+    
+    except sqlite3.Error as er :
+            print (colored("SQLite Error: "+ str(er), 'red'))
+            send_serialData("refuse shoping")
+            
+    print("red:",red_objetcs)
+    print("green:",green_objetcs)
+    print("yellow:",yellow_objetcs)
+
+    return red_objetcs, green_objetcs, yellow_objetcs
+    
 ## main programe:
 if init_db():
     while(True):
@@ -184,7 +210,7 @@ if init_db():
                     p2.start()
                 
                 elif 'test' in message:
-                    p3 = Process(target=tessst)
+                    p3 = Process(target=storeProducts)
                     p3.start()
 
                 else:
