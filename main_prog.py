@@ -17,7 +17,7 @@ c = conn.cursor()
 
 def init_db(): 
     try:
-        c.execute("CREATE TABLE IF NOT EXISTS products(ID integer PRIMARY KEY, Name  text, typeID integer)")
+        c.execute("CREATE TABLE IF NOT EXISTS products(ID integer PRIMARY KEY, Name  text, typeID integer, color text)")
         c.execute("CREATE TABLE IF NOT EXISTS orders(orderID integer PRIMARY KEY, userID integer, checkedOut integer)")
         return True
     except sqlite3.Error as er:
@@ -43,9 +43,25 @@ def gate():
     print(user_id)
     if not erorr:
         try:
-            c.execute("SELECT userID FROM orders WHERE checkedOut = 0 AND userID = "+user_id)    
-            row = c.fetchall()            
-            if(user_id in row):
+            c.execute("SELECT userID FROM orders WHERE checkedOut = 0")    
+            row = c.fetchone()            
+            if(row is not None and int(user_id) in row):
+                try:
+                    c.execute("SELECT orderID FROM orders WHERE checkedOut = 0 AND userID = "+ str(user_id)) 
+                    order_id=c.fetchone()[0]
+                    print(order_id)
+                    print (colored("Checking out please wait ...", 'blue'))
+                    if(not api_handler.new_exit(order_id)):
+                        print(colored("Thank your for visiting us, Have a good day :)", 'green'))
+                        c.execute("UPDATE orders SET checkedOut = 1 WHERE orderID = "+str(order_id))
+                        conn.commit() 
+                    else:
+                        print(colored("Error in Checking out, please check your app for more details", 'red'))
+
+                except sqlite3.Error as er :
+                    print (colored("SQLite Error: "+ str(er), 'red'))
+                    send_serialData("refuse shoping")
+            else:
                 print(colored("Welcome, "+user_id,"green"))
                 print(colored("Getting profile from server ... ","blue"))
                 perm, error = api_handler.get_perm(user_id)
@@ -80,13 +96,7 @@ def gate():
 
                 else:
                     send_serialData("refuse entry") 
-            else:
-                c.execute("SELECT orderID FROM orders WHERE checkedOut = 0 AND userID = "+user_id) 
-                order_id=c.fetchone()[0]
-                print (colored("Checking out please wait ...", 'blue'))
-                api_handler.new_exit(order_id)       
-                c.execute("UPDATE orders SET checkedOut = `1` WHERE orderID = '"+order_id+" "")
-
+           
         except sqlite3.Error as er :
                 print (colored("SQLite Error: "+ str(er), 'red'))
 
@@ -101,7 +111,7 @@ def shop():
     if not error:
         print(user_id)
         try:
-            c.execute("SELECT orderID FROM orders WHERE userID = "+str(user_id))    
+            c.execute("SELECT orderID FROM orders WHERE userID = "+str(user_id)+" AND  checkedOut = 0 ")    
             order_id=c.fetchone()[0] 
 
             c.execute("SELECT typeID FROM products WHERE ID = "+prod_id)
@@ -111,12 +121,32 @@ def shop():
 
             send_serialData("approve shoping")        
         except sqlite3.Error as er :
-            print (colored("SQLite Error: "+ er, 'red'))
+            print (colored("SQLite Error: "+ str(er), 'red'))
             send_serialData("refuse shoping")
 
     else:
         send_serialData("refuse shoping")
 
+def tessst():
+    user_id = 24
+    c.execute("SELECT userID FROM orders WHERE checkedOut = 0")    
+    row = c.fetchone()            
+    if(row is not None and user_id in row):
+        try:
+            c.execute("SELECT orderID FROM orders WHERE checkedOut = 0 AND userID = "+ str(user_id)) 
+            order_id=c.fetchone()[0]
+            print(order_id)
+            print (colored("Checking out please wait ...", 'blue'))
+            if(not api_handler.new_exit(order_id)):
+                print(colored("Thank your for visiting us, Have a good day :)", 'green'))
+            c.execute("UPDATE orders SET checkedOut = 1 WHERE orderID = "+str(order_id))
+            conn.commit() 
+
+        except sqlite3.Error as er :
+            print (colored("SQLite Error: "+ str(er), 'red'))
+            send_serialData("refuse shoping")
+    else:
+        print(colored("Welcome, "+str(user_id),"green"))
 
 ## main programe:
 if init_db():
@@ -142,6 +172,23 @@ if init_db():
 
         else:
             message = input(colored("insert command manually >> ","green"))
-            execute_tasks(message)
+            if len(message)>2:
+                print(message)
+                if 'gate' in message :
+                    #gate()
+                    p1 = Process(target=gate)
+                    p1.start()
+
+                elif 'shop' in message :
+                    p2 = Process(target=shop)
+                    p2.start()
+                
+                elif 'test' in message:
+                    p3 = Process(target=tessst)
+                    p3.start()
+
+                else:
+                    print (colored("Warning: unknown recieved serial data !", 'yellow'))
+
 
 

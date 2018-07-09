@@ -38,6 +38,7 @@ def read_usb(i):
         key = cv2.waitKey(1) & 0xFF
         # if the 'q' key is pressed, stop the loop (Exit)
         if key == ord("q"):
+            cv2.destroyAllWindows()
             break
 
 
@@ -86,4 +87,3 @@ def read_multiple(url):
             break
 
 
-#read_usb(2)
