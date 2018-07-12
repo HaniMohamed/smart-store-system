@@ -14,20 +14,18 @@ import urllib.request
 
 
 def detect_objects(url):
-    yellow=[(20,100,100),(30,255,255)] # lower and upper 
-    red = [(17,15,100),(50,56,200)] 
-    green = [(33,80,40),(102,255,255)]
+    yellow = [(20, 100, 100),(30, 255, 255)] 
+    green = [(33,60,40),(102,255,255)]
 
-    objColors=[red, green, yellow]
+    objColors=[yellow, green]
 
-    kernelOpen = np.ones((10, 10))    #Max. array of pixels that cosider as noise pixels  -> look at [2]
-    kernelClose = np.ones((80, 80)) #array of pixels which will fill in -> look at [3]
+    kernelOpen = np.ones((20, 20))    #Max. array of pixels that cosider as noise pixels  -> look at [2]
+    kernelClose = np.ones((2, 2)) #array of pixels which will fill in -> look at [3]
 
     #start the process loop
-    for i in range(0,2):
-        redObj = 0
-        greenObj = 0
+    while(True):
         yellowObj = 0
+        greenObj = 0
 
         imgResp=urllib.request.urlopen(url)
         imgNp=np.array(bytearray(imgResp.read()),dtype=np.uint8)
@@ -57,16 +55,15 @@ def detect_objects(url):
             _, conts, _ = cv2.findContours(finalMask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         
             if i==0:
-                print("red",">>>>",len(conts))
-                redObj = len(conts)
-            elif i==1:
-                print("green",">>>>",len(conts))
-                greenObj = len(conts)
-            elif i==2:
-                print("yellow",">>>>",len(conts))
+                #print("yellow",">>>>",len(conts))
                 yellowObj = len(conts)
+                cv2.imshow("yellowMask", maskClose) 
+            elif i==1:
+                #print("green",">>>>",len(conts))
+                greenObj = len(conts)
+                cv2.imshow("greenMask", maskClose) 
 
-        return redObj,greenObj,yellowObj
+        return greenObj, yellowObj
 
         #Showing Camera frame
         cv2.imshow("Camera", cv2.flip( img, 1 )) 
@@ -78,3 +75,4 @@ def detect_objects(url):
             break
 
     cv2.destroyAllWindows()
+
