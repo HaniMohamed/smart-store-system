@@ -43,11 +43,21 @@ def getItem():
     diffYellow = yellow-yellow_objetcs
 
     if(diffGreen>0 or diffGreen <0):
+        c.execute("SELECT * FROM products WHERE color = 'green'")
+        rows = c.fetchall()
+        for row in rows:
+            c.execute("DELETE FROM products WHERE ID = "+str(row[0]))
+            conn.commit() 
+            break
         return 2, diffGreen 
     elif(diffYellow>0 or diffYellow <0):
+        c.execute("SELECT * FROM products WHERE color = 'yellow'")
+        rows = c.fetchall()
+        for row in rows:
+            c.execute("DELETE FROM products WHERE ID = "+str(row[0]))
+            conn.commit() 
+            break
         return 3, diffYellow
 
     return None, True
     
-i, x =getItem()
-print("shop",str(i),str(x))

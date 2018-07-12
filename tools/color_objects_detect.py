@@ -10,8 +10,12 @@ Created on Wed Nov 29 21:51:01 2017
 import cv2   #import openCV library for the computer vision
 import numpy as np   #import numpy library for arrays usages
 import urllib.request
+import sqlite3
 
 
+##conect to the local database
+conn = sqlite3.connect('store.db')
+c = conn.cursor()
 
 def detect_objects(url):
     yellow = [(20, 100, 100),(30, 255, 255)] 

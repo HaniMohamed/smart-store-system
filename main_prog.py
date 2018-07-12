@@ -3,6 +3,7 @@ import sqlite3
 from termcolor import colored
 from multiprocessing import Process
 import time
+import pyttsx3
 
 
 import constants
@@ -14,6 +15,7 @@ import exit_gate
 ##conect to the local database
 conn = sqlite3.connect('store.db')
 c = conn.cursor()
+
 
 def init_db(): 
     try:
@@ -38,10 +40,17 @@ def init_serialCom():
 def send_serialData(message):
     ser.write(bytes(message,'utf-8'))    
    
+def speech(message):
+  engine = pyttsx3.init()
+  engine.say("message")
+  engine.runAndWait()
+
 def gate():
     user_id, erorr = entry_gate.read_qr()
     print(user_id)
     if not erorr:
+        speechThread = Process(target=speech, args=("Welcome"))
+        speechThread.start()
         try:
             c.execute("SELECT userID FROM orders WHERE checkedOut = 0")    
             row = c.fetchone()            
@@ -50,6 +59,10 @@ def gate():
                     c.execute("SELECT orderID FROM orders WHERE checkedOut = 0 AND userID = "+ str(user_id)) 
                     order_id=c.fetchone()[0]
                     print(order_id)
+                    
+                    speechThread = Process(target=speech, args=['Checking out, Please wait'])
+                    speechThread.start()
+
                     print (colored("Checking out please wait ...", 'blue'))
                     if(not api_handler.new_exit(order_id)):
                         print(colored("Thank your for visiting us, Have a good day :)", 'green'))
@@ -62,16 +75,24 @@ def gate():
                     print (colored("SQLite Error: "+ str(er), 'red'))
                     send_serialData("refuse shoping")
             else:
+                speechThread = Process(target=speech, args=['Welcome, please wait getting your profile'])
+                speechThread.start()
                 print(colored("Welcome, "+user_id,"green"))
                 print(colored("Getting profile from server ... ","blue"))
                 perm, error = api_handler.get_perm(user_id)
 
                 if perm == 1:   #full registered
+                    speechThread = Process(target=speech, args=['Checking face, please keep your face in front of the camera'])
+                    speechThread.start()
+
                     print(colored("Checking face, please keep your face in front of the camera ","green"))
                     entry_done = entry_gate.check_face(user_id)
 
                 elif perm == 0:  #no pics
                     input(colored("This user need to register his pics press ENTER to continue","blue"))
+                    speechThread = Process(target=speech, args=['You need to registe your face'])
+                    speechThread.start()
+                    
                     erorr = entry_gate.register(user_id)
                     if not erorr:
                         api_handler.set_perm(user_id)
@@ -86,6 +107,9 @@ def gate():
                         order_id, error = api_handler.new_entry(user_id)
                         c.execute("INSERT INTO orders ('userID', 'orderID','checkedOut') Values( "+user_id+" , "+ str(order_id)+" , 0 )")
                         conn.commit() 
+                        speechThread = Process(target=speech, args=['Authenticating complete, enjoy shoping'])
+                        speechThread.start()
+                    
                         print(colored("Authenticating complete, enjoy shoping :)","green"))
                            
                         
@@ -105,8 +129,9 @@ def gate():
 
 def shop():
     msg=[x.strip() for x in message.split(',')]
-    prod_id = msg[1]
-    state = msg[2]
+    prod_id , state = shooping.getItem() 
+    #prod_id = msg[1]
+    #state = msg[2]
     user_id, error = shooping.getUser()
     if not error:
         print(user_id)
@@ -184,11 +209,6 @@ if init_db():
                 elif 'shop' in message :
                     p2 = Process(target=shop)
                     p2.start()
-                
-                elif 'test' in message:
-                    p3 = Process(target=storeProducts)
-                    p3.start()
-
                 else:
                     print (colored("Warning: unknown recieved serial data !", 'yellow'))
 
